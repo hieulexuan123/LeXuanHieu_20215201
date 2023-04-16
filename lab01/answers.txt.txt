@@ -1,0 +1,2 @@
+1. If I choose "cancle", the program consider that choice as "no" and display "You've chosen: No"
+2. We can pass the title of a dialog as third parameter, and pass YES_NO_OPTION as OptionType in fourth parameter to method showConfirmDialog()
