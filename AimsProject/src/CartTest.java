@@ -11,9 +11,10 @@ public class CartTest {
 		cart.addDigitalVideoDisc(dvd1);
 		cart.addDigitalVideoDisc(dvd2);
 		cart.addDigitalVideoDisc(dvd3);
-		
 		cart.print();
-
+		
+		cart.searchById(3);
+		cart.searchByTitle("The Lion King");
 	}
 
 }

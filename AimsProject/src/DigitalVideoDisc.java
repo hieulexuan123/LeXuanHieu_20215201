@@ -70,4 +70,8 @@ public class DigitalVideoDisc {
 	public String toString() {
 		return "DVD - " + this.getTitle() + " - " + this.getCategory() + " - " + this.getDirector() + " - " + this.getLength() + " : " + this.getCost() + " $";
 	}
+	
+	public boolean isMatch(String title) {
+		return title == this.getTitle();
+	}
 }
