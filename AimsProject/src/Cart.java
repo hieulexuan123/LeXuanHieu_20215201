@@ -83,4 +83,14 @@ public class Cart {
 		}
 		return cost;
 	}
+	
+	public void print() {
+		System.out.println("\n***********************CART***********************");
+		System.out.println("Ordered items:");
+		for (int i=1; i<=qtyOrdered; i++) {
+			System.out.println(i + ". " + itemsOrdered[i-1].toString());
+		}
+		System.out.println("Total cost: " + this.totalCost() + "$");
+		System.out.println("***************************************************");
+	}
 }
