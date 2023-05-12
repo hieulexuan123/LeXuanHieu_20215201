@@ -1,3 +1,6 @@
+package hust.soict.ict.test.cart;
+import hust.soict.ict.aims.cart.Cart;
+import hust.soict.ict.aims.disc.DigitalVideoDisc;
 
 public class CartTest {
 
