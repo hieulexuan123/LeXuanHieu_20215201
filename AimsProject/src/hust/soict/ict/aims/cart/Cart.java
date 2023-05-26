@@ -1,5 +1,5 @@
 package hust.soict.ict.aims.cart;
-import hust.soict.ict.aims.disc.DigitalVideoDisc;
+import hust.soict.ict.aims.media.DigitalVideoDisc;
 
 public class Cart {
 	private int qtyOrdered = 0;
