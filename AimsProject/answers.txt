@@ -1,6 +1,16 @@
+lab03
 1. I prefer arbitrary number of arguments because I do not need to initialize an array and pass the array as argument.
 2. Java is pass-by-value programming language.
 3. jungleDVD and cinderellaDVD in main are references to objects. 
 When we call swap(), we pass the values of jungleDVD and cinderellaDVD references to parameters o1, o2. So o1 refers to jungleDVD object, o2 refers to cinderrellaDVD object. In swap method, we swap the values of o1, o2, so o1 will point to cinderellaDVD object and o2 will point to jungleDVD object. But o1, o2 are local to swap method, and the values of jungleDVD and cinderellaDVD references in main are not changed. Therefore, the titles of 2 objects remain unchanged.
 When we call changeTitle(), we pass the value of jungleDVD reference to parameter dvd, meaning that dvd points to jungleDVD object. In changeTitle method, we set the title of the object that dvd points to (jungleDVD object) to a new title. Therefore jungleDVD object will have the new title, and when we get the new title through jungleDVD reference in the main, we will see the change.
 4. The return type of toString() is String. 
+
+lab04
+1. Cart is aggregate of Media. Store is aggregate of Media. CompactDisc is aggregate of Track
+2. If the passing object is not an instance of Media, equals() returns false.
+3. Because Book, CompactDisc and DigitalVideoDisc inherit Media, objects book, cd, dvd are also instances of Media. 
+4. Class Media implements Comparable interface
+5. The compareTo() method needs to return a negative integer, zero, or a positive integer if the current object is less than, equal to, or greater than the specified object, respectively.
+6. No, because Comparable interface is used for internal comparison and can be implemented only once by class Media.
+7. I override compareTo() method in DigitalVideoDisc.

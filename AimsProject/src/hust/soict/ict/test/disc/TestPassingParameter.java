@@ -27,14 +27,14 @@ public class TestPassingParameter {
 	        DigitalVideoDisc dvd2 = (DigitalVideoDisc) o2;
 
 	        String tempTitle = dvd1.getTitle();
-	        dvd1.setTitle(dvd2.getTitle());
-	        dvd2.setTitle(tempTitle);
+//	        dvd1.setTitle(dvd2.getTitle());
+//	        dvd2.setTitle(tempTitle);
 	    }
 	}
 
 	public static void changeTitle(DigitalVideoDisc dvd, String title) {
 		String oldTitle = dvd.getTitle();
-		dvd.setTitle(title);
+//		dvd.setTitle(title);
 		dvd = new DigitalVideoDisc(oldTitle);
 	}
 }
