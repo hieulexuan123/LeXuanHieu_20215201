@@ -1,4 +1,4 @@
-package hust.soict.ict.swing;
+package hust.soict.globalict.swing;
 
 import java.awt.Container;
 import java.awt.GridLayout;

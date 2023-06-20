@@ -1,12 +1,15 @@
-package hust.soict.ict.aims.store;
+package hust.soict.ict.aims.screen;
 
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import hust.soict.ict.aims.media.Media;
@@ -28,9 +31,13 @@ public class MediaStore extends JPanel{
 		JPanel container = new JPanel();
 		container.setLayout(new FlowLayout(FlowLayout.CENTER));
 		
-		container.add(new JButton("Add to cart"));
+		JButton addBtn = new JButton("Add to cart");
+		container.add(addBtn);
+		
 		if (media instanceof Playable) {
-			container.add(new JButton("Play"));
+			JButton playBtn = new JButton("Play");
+			playBtn.addActionListener(new btnListener());
+			container.add(playBtn);
 		}
 		
 		this.add(Box.createVerticalGlue());
@@ -39,4 +46,14 @@ public class MediaStore extends JPanel{
 		this.add(Box.createVerticalGlue());
 		this.add(container);
 	}
+	
+	private class btnListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			JOptionPane.showMessageDialog(null, "Playing " + media.getTitle(), "Playable Media", JOptionPane.INFORMATION_MESSAGE);		
+		} 
+		
+	}
+	
 }

@@ -1,4 +1,4 @@
-package hust.soict.ict.swing;
+package hust.soict.globalict.swing;
 
 import java.awt.Frame;
 import java.awt.GridLayout;

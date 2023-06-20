@@ -19,8 +19,10 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
+import hust.soict.ict.aims.media.Book;
+import hust.soict.ict.aims.media.CompactDisc;
+import hust.soict.ict.aims.media.DigitalVideoDisc;
 import hust.soict.ict.aims.media.Media;
-import hust.soict.ict.aims.store.MediaStore;
 import hust.soict.ict.aims.store.Store;
 
 public class StoreScreen extends JFrame{
@@ -92,12 +94,22 @@ public class StoreScreen extends JFrame{
 		center.setLayout(new GridLayout(3, 3, 2, 2));
 		
 		ArrayList<Media> mediaInStore = store.getItemsInStore();
-		for (int i=0; i<9; i++) {
+		for (int i=0; i<mediaInStore.size(); i++) {
 			MediaStore cell = new MediaStore(mediaInStore.get(i));
 			center.add(cell);
 		}
 		
 		return center;
 	}
-
+	
+	public static void main(String[] args) {
+		Store store = new Store(5);
+		DigitalVideoDisc dvd = new DigitalVideoDisc("Harry Potterr", "Animation", "Roger Allers", 87, 19.95f);
+	    Book book = new Book(5, "Harry Potter", "Science Fiction", 9.9f);
+	    CompactDisc cd = new CompactDisc(10, "Greatest Hits", "Rock", 11f, "Journey", "Micheal Jackson");	
+		store.addMedia(dvd);
+		store.addMedia(book);
+		store.addMedia(cd);
+		new StoreScreen(store);
+	}
 }
