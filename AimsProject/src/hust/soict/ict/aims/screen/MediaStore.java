@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -50,9 +51,19 @@ public class MediaStore extends JPanel{
 	private class btnListener implements ActionListener {
 
 		@Override
-		public void actionPerformed(ActionEvent e) {
-			JOptionPane.showMessageDialog(null, "Playing " + media.getTitle(), "Playable Media", JOptionPane.INFORMATION_MESSAGE);		
-		} 
+		 public void actionPerformed(ActionEvent e) {
+	        JDialog dialog = new JDialog();
+	        dialog.setTitle("Playable Media");
+
+	        JPanel panel = new JPanel();
+	        panel.add(new JLabel("Playing " + media.getTitle()));
+	        dialog.add(panel);
+
+	        dialog.setSize(300, 200); 
+	        dialog.setLocationRelativeTo(null); 
+	        dialog.setModal(true); 
+	        dialog.setVisible(true); 
+	    } 
 		
 	}
 	
