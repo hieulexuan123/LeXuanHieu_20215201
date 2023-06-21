@@ -2,6 +2,10 @@ package hust.soict.ict.aims.cart;
 
 import java.util.Collections;
 
+import javax.naming.LimitExceededException;
+
+import hust.soict.ict.aims.exception.EmptyException;
+import hust.soict.ict.aims.exception.NotExistedException;
 import hust.soict.ict.aims.media.DigitalVideoDisc;
 import hust.soict.ict.aims.media.Media;
 import javafx.collections.FXCollections;
@@ -15,24 +19,22 @@ public class Cart {
 		return itemsOrdered;
 	}
 
-	public void addMedia(Media media) {
+	public void addMedia(Media media) throws LimitExceededException {
 		if (itemsOrdered.size() < MAX_NUMBERS_ORDERED) {
 			itemsOrdered.add(media);
 			System.out.println("Successfully added");
 		}
 		else {
-			System.out.println("Your cart is full!");
+			throw new LimitExceededException("Error: The number of media has reached its limit");
 		}
 	}
 	
-	public void removeMedia(Media media) {
+	public void removeMedia(Media media) throws EmptyException, NotExistedException  {
 		if (itemsOrdered.isEmpty()) {
-			System.out.println("Your cart is empty!");
-		}
-		else if (!itemsOrdered.contains(media)) {
-			System.out.println("Media is not found in your cart");
-		}
-		else {
+			throw new EmptyException("Your cart is empty!");
+		} else if (!itemsOrdered.contains(media)) {
+			throw new NotExistedException("Media is not found in your cart");
+		} else {
 			itemsOrdered.remove(media);
 			System.out.println("Successfully removed");
 		}

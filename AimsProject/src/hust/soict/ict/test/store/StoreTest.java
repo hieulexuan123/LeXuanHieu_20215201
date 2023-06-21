@@ -1,4 +1,6 @@
 package hust.soict.ict.test.store;
+import javax.naming.LimitExceededException;
+
 import hust.soict.ict.aims.media.Book;
 import hust.soict.ict.aims.media.CompactDisc;
 import hust.soict.ict.aims.media.DigitalVideoDisc;
@@ -7,7 +9,7 @@ import hust.soict.ict.aims.store.Store;
 
 public class StoreTest {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		Store store = new Store(3);
 		
 		DigitalVideoDisc dvd = new DigitalVideoDisc("Harry Potter", "Animation", "Roger Allers", 87, 19.95f);

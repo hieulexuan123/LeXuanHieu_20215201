@@ -1,6 +1,10 @@
 package hust.soict.ict.aims.store;
 import java.util.ArrayList;
 
+import javax.naming.LimitExceededException;
+
+import hust.soict.ict.aims.exception.EmptyException;
+import hust.soict.ict.aims.exception.NotExistedException;
 import hust.soict.ict.aims.media.DigitalVideoDisc;
 import hust.soict.ict.aims.media.Media;
 
@@ -21,22 +25,22 @@ public class Store {
 		System.out.println("***************************************************");
 	}
     
-    public void addMedia(Media media) {
+    public void addMedia(Media media) throws LimitExceededException {
 		if (itemsInStore.size() < capacity) {
 			itemsInStore.add(media);
 			System.out.println("Successfully added");
 		}
 		else {
-			System.out.println("Your store is full!");
+			throw new LimitExceededException("Error: The number of media has reached its limit");
 		}
 	}
 	
-	public void removeMedia(Media media) {
+	public void removeMedia(Media media) throws EmptyException, NotExistedException {
 		if (itemsInStore.isEmpty()) {
-			System.out.println("Your store is empty!");
+			throw new EmptyException("Your cart is empty!");
 		}
 		else if (!itemsInStore.contains(media)) {
-			System.out.println("Media is not found in your store");
+			throw new NotExistedException("Media is not found in your cart");
 		}
 		else {
 			itemsInStore.remove(media);

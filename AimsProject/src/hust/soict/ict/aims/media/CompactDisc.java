@@ -3,17 +3,22 @@ package hust.soict.ict.aims.media;
 import java.util.ArrayList;
 import java.util.List;
 
+import hust.soict.ict.aims.exception.AlreadyExistedException;
+import hust.soict.ict.aims.exception.NegativeException;
+import hust.soict.ict.aims.exception.NotExistedException;
+import hust.soict.ict.aims.exception.PlayerException;
+
 public class CompactDisc extends Disc implements Playable{
 	private String artist;
 	private List<Track> tracks = new ArrayList<>();
 	
-	public CompactDisc(int id, String title, String category, float cost, String director, String artist, ArrayList<Track> tracks) {
+	public CompactDisc(int id, String title, String category, float cost, String director, String artist, ArrayList<Track> tracks) throws NegativeException {
 		super(id, title, category, cost, director);
 		this.artist = artist;
 		this.tracks = tracks;
 	}
 	
-	public CompactDisc(int id, String title, String category, float cost, String director, String artist) {
+	public CompactDisc(int id, String title, String category, float cost, String director, String artist) throws NegativeException {
 		super(id, title, category, cost, director);
 		this.artist = artist;
 	}
@@ -22,23 +27,23 @@ public class CompactDisc extends Disc implements Playable{
 		return artist;
 	}
 	
-	public void addTrack(Track track) {
+	public void addTrack(Track track) throws AlreadyExistedException {
 		if (!tracks.contains(track)) {
 			tracks.add(track);
 			System.out.println(track.getTitle() + " has been added!");
 		}
 		else {
-			System.out.println(track.getTitle() + " already in the list. Cannot be added");
+			throw new AlreadyExistedException(track.getTitle() + " already in the list. Cannot be added");
 		}
 	}
 	
-	public void removeTrack(Track track) {
+	public void removeTrack(Track track) throws NotExistedException {
 		if (tracks.contains(track)) {
 			tracks.remove(track);
 			System.out.println(track.getTitle() + " has been removed!");
 		}
 		else {
-			System.out.println(track.getTitle() + " not in the list. Cannot be removed");
+			throw new NotExistedException(track.getTitle() + " not in the list. Cannot be removed");
 		}
 	}
 	
@@ -56,11 +61,20 @@ public class CompactDisc extends Disc implements Playable{
 	}
 
 	@Override
-	public void play() {
-		System.out.println("There are " + tracks.size() + " tracks in the CD");
-		for (Track track : tracks) {
-			track.play();
+	public void play() throws PlayerException {
+		if (this.getLength() > 0) {
+			for (Track track : tracks) {
+				try {
+					track.play();
+				} catch (PlayerException e) {
+					e.printStackTrace();
+				}
+			}
 		}
+		else {
+			throw new PlayerException("ERROR: CD length is non-positive");
+		}
+		
 	}
 		
 }

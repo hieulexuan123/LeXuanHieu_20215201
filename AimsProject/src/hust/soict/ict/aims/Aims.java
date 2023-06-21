@@ -1,7 +1,12 @@
 package hust.soict.ict.aims;
 import java.util.Scanner;
 
+import javax.naming.LimitExceededException;
+
 import hust.soict.ict.aims.cart.Cart;
+import hust.soict.ict.aims.exception.AlreadyExistedException;
+import hust.soict.ict.aims.exception.NegativeException;
+import hust.soict.ict.aims.exception.PlayerException;
 import hust.soict.ict.aims.media.Book;
 import hust.soict.ict.aims.media.CompactDisc;
 import hust.soict.ict.aims.media.DigitalVideoDisc;
@@ -58,7 +63,11 @@ public class Aims {
 										choice = scanner.next();
 										switch(choice) {
 											case "1":{
-												cart.addMedia(media);
+												try {
+													cart.addMedia(media);
+												} catch (LimitExceededException e) {						
+													e.printStackTrace();
+												}
 												break;
 											}
 											case "2":{
@@ -66,10 +75,17 @@ public class Aims {
 													System.out.println("Book cannot be played.");
 												}
 												else if (media instanceof CompactDisc){
-													((CompactDisc)media).play();
+													try {
+														((CompactDisc)media).play();
+													} catch (PlayerException e) {														
+													}
 												}
 												else {
-													((DigitalVideoDisc)media).play();
+													try {
+														((DigitalVideoDisc)media).play();
+													} catch (PlayerException e) {														
+														e.printStackTrace();
+													}
 												}
 												break;
 											}
@@ -96,7 +112,11 @@ public class Aims {
 									System.out.println("Media does not exist.");
 								}
 								else {
-									cart.addMedia(media);
+									try {
+										cart.addMedia(media);
+									} catch (LimitExceededException e) {										
+										e.printStackTrace();
+									}
 								}
 								break;
 							}
@@ -115,10 +135,18 @@ public class Aims {
 										System.out.println("Book cannot be played.");
 									}
 									else if (media instanceof CompactDisc){
-										((CompactDisc)media).play();
+										try {
+											((CompactDisc)media).play();
+										} catch (PlayerException e) {											
+											e.printStackTrace();
+										}
 									}
 									else {
-										((DigitalVideoDisc)media).play();
+										try {
+											((DigitalVideoDisc)media).play();
+										} catch (PlayerException e) {											
+											e.printStackTrace();
+										}
 									}
 								}
 								break;
@@ -177,14 +205,28 @@ public class Aims {
 								System.out.println("Enter the number of authors: ");
 								int num = scanner.nextInt();
 								scanner.nextLine();
-								Book book = new Book(id, title, category, cost);							
-								while (num>0) {
-									System.out.println("Enter author: ");
-									String author = scanner.nextLine();
-									book.addAuthor(author);
-									num--;
-								}
-								store.addMedia(book);
+								Book book;
+								try {
+									book = new Book(id, title, category, cost);
+									while (num>0) {
+										System.out.println("Enter author: ");
+										String author = scanner.nextLine();
+										try {
+											book.addAuthor(author);
+										} catch (AlreadyExistedException e) {
+											e.printStackTrace();
+										}
+										num--;
+									}
+									try {
+										store.addMedia(book);
+									} catch (LimitExceededException e) {									
+										e.printStackTrace();
+									}
+								} catch (NegativeException e) {									
+									e.printStackTrace();
+								}			
+								
 							}
 							else if (type.equals("dvd")) {
 								System.out.println("Enter the director: ");
@@ -192,8 +234,17 @@ public class Aims {
 								System.out.println("Enter length: ");
 								int length = scanner.nextInt();
 								scanner.nextLine();
-								DigitalVideoDisc dvd = new DigitalVideoDisc(title, category, director, length, cost);
-								store.addMedia(dvd);
+								DigitalVideoDisc dvd;
+								try {
+									dvd = new DigitalVideoDisc(title, category, director, length, cost);
+									try {
+										store.addMedia(dvd);
+									} catch (LimitExceededException e) {									
+										e.printStackTrace();
+									}
+								} catch (NegativeException e) {									
+									e.printStackTrace();
+								}								
 							}
 							else {
 								System.out.println("Enter the director: ");
@@ -203,17 +254,30 @@ public class Aims {
 								System.out.println("Enter the number of tracks: ");
 								int num = scanner.nextInt();
 								scanner.nextLine();
-								CompactDisc cd = new CompactDisc(id, title, category, cost, director, artist);
-								while (num>0) {
-									System.out.println("Enter track title: ");
-									String trackTitle = scanner.nextLine();
-									System.out.println("Enter track length: ");
-									int trackLength = scanner.nextInt();
-									scanner.nextLine();
-									cd.addTrack(new Track(trackTitle, trackLength));
-									num--;
-								}
-								store.addMedia(cd);
+								CompactDisc cd;
+								try {
+									cd = new CompactDisc(id, title, category, cost, director, artist);
+									while (num>0) {
+										System.out.println("Enter track title: ");
+										String trackTitle = scanner.nextLine();
+										System.out.println("Enter track length: ");
+										int trackLength = scanner.nextInt();
+										scanner.nextLine();
+										try {
+											cd.addTrack(new Track(trackTitle, trackLength));
+										} catch (AlreadyExistedException e) {										
+											e.printStackTrace();
+										}
+										num--;
+									}
+									try {
+										store.addMedia(cd);
+									} catch (LimitExceededException e) {								
+										e.printStackTrace();
+									}
+								} catch (NegativeException e) {									
+									e.printStackTrace();
+								}							
 								
 							}
 
@@ -299,7 +363,11 @@ public class Aims {
 									System.out.println("Media does not exist.");
 								}
 								else {
-									cart.removeMedia(media);
+									try {
+										cart.removeMedia(media);
+									} catch (Exception e) {										
+										e.printStackTrace();
+									}
 								}
 								break;
 							}
@@ -318,10 +386,18 @@ public class Aims {
 										System.out.println("Book cannot be played.");
 									}
 									else if (media instanceof CompactDisc){
-										((CompactDisc)media).play();
+										try {
+											((CompactDisc)media).play();
+										} catch (PlayerException e) {											
+											e.printStackTrace();
+										}
 									}
 									else {
-										((DigitalVideoDisc)media).play();
+										try {
+											((DigitalVideoDisc)media).play();
+										} catch (PlayerException e) {											
+											e.printStackTrace();
+										}
 									}
 								}
 								break;

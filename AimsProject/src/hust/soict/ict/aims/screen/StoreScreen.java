@@ -9,6 +9,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 
+import javax.naming.LimitExceededException;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -19,6 +20,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
+import hust.soict.ict.aims.exception.NegativeException;
 import hust.soict.ict.aims.media.Book;
 import hust.soict.ict.aims.media.CompactDisc;
 import hust.soict.ict.aims.media.DigitalVideoDisc;
@@ -103,13 +105,34 @@ public class StoreScreen extends JFrame{
 	}
 	
 	public static void main(String[] args) {
-		Store store = new Store(5);
-		DigitalVideoDisc dvd = new DigitalVideoDisc("Harry Potterr", "Animation", "Roger Allers", 87, 19.95f);
-	    Book book = new Book(5, "Harry Potter", "Science Fiction", 9.9f);
-	    CompactDisc cd = new CompactDisc(10, "Greatest Hits", "Rock", 11f, "Journey", "Micheal Jackson");	
-		store.addMedia(dvd);
-		store.addMedia(book);
-		store.addMedia(cd);
+		Store store = new Store(3);
+		DigitalVideoDisc dvd;
+		try {
+			dvd = new DigitalVideoDisc("Harry Potterr", "Animation", "Roger Allers", 87, 19.95f);
+			store.addMedia(dvd);
+		} catch (NegativeException e) {
+			e.printStackTrace();
+		} catch (LimitExceededException e) {
+			e.printStackTrace();
+		}
+	    Book book;
+		try {
+			book = new Book(5, "Harry Potter", "Science Fiction", 9.9f);
+			store.addMedia(book);
+		} catch (NegativeException e) {
+			e.printStackTrace();
+		} catch (LimitExceededException e) {			
+			e.printStackTrace();
+		}
+	    CompactDisc cd;
+		try {
+			cd = new CompactDisc(10, "Greatest Hits", "Rock", 11f, "Journey", "Micheal Jackson");
+			store.addMedia(cd);
+		} catch (NegativeException e) {
+			e.printStackTrace();
+		} catch (LimitExceededException e) {			
+			e.printStackTrace();
+		}
 		new StoreScreen(store);
 	}
 }
