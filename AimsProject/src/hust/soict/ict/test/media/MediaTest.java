@@ -14,8 +14,8 @@ public class MediaTest {
 	public static void main(String[] args) throws NegativeException {
 		List<Media> media = new ArrayList<Media>();
         DigitalVideoDisc dvd = new DigitalVideoDisc("The Lion King", "Animation", "Roger Allers", 87, 19.95f);
-        Book book = new Book(1, "Harry Potter", "Science Fiction", 9.9f);
-        CompactDisc cd = new CompactDisc(10, "Greatest Hits", "Rock", 11f, "Journey", "Micheal Jackson");
+        Book book = new Book("Harry Potter", "Science Fiction", 9.9f);
+        CompactDisc cd = new CompactDisc("Greatest Hits", "Rock", 11f, "Journey", "Micheal Jackson");
 
         media.add(cd);
         media.add(dvd);
