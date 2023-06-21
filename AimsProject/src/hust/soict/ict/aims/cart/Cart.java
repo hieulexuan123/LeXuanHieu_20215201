@@ -106,5 +106,12 @@ public class Cart {
 		return null;
     }
     
-    
+    public void placeOrder() {
+		if (itemsOrdered.size() > 0) {
+			itemsOrdered.clear();
+			System.out.println("Order successful");
+		} else {
+			System.out.println("No items in the cart.");
+		}
+	}
 }

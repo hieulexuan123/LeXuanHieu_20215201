@@ -7,6 +7,8 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.naming.LimitExceededException;
@@ -20,17 +22,23 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
+import hust.soict.ict.aims.cart.Cart;
 import hust.soict.ict.aims.exception.NegativeException;
 import hust.soict.ict.aims.media.Book;
 import hust.soict.ict.aims.media.CompactDisc;
 import hust.soict.ict.aims.media.DigitalVideoDisc;
 import hust.soict.ict.aims.media.Media;
+import hust.soict.ict.aims.screen.add.AddBookToStoreScreen;
+import hust.soict.ict.aims.screen.add.AddCompactDiscToStoreScreen;
+import hust.soict.ict.aims.screen.add.AddDigitalVideoDiscToStoreScreen;
 import hust.soict.ict.aims.store.Store;
 
 public class StoreScreen extends JFrame{
 	private Store store;
+	private Cart cart;
 	
 	public StoreScreen(Store store) {
+		this.cart = new Cart();
 		this.store = store;
 		Container cp = getContentPane();
 		cp.setLayout(new BorderLayout());
@@ -55,13 +63,39 @@ public class StoreScreen extends JFrame{
 		JMenu menu = new JMenu("Options");
 		
 		JMenu smUpdateStore = new JMenu("Update store");
-		smUpdateStore.add(new JMenuItem("Add book"));
-		smUpdateStore.add(new JMenuItem("Add DVD"));
-		smUpdateStore.add(new JMenuItem("Add CD"));
+		JMenuItem addBookMenuItem = new JMenuItem("Add book");
+		addBookMenuItem.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		        new AddBookToStoreScreen(store);
+		    }
+		});
+		smUpdateStore.add(addBookMenuItem);
+
+		JMenuItem addCDMenuItem = new JMenuItem("Add CD");
+		addCDMenuItem.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		        new AddCompactDiscToStoreScreen(store);
+		    }
+		});
+		smUpdateStore.add(addCDMenuItem);
+
+		JMenuItem addDVDMenuItem = new JMenuItem("Add DVD");
+		addDVDMenuItem.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		        new AddDigitalVideoDiscToStoreScreen(store);
+		    }
+		});
+		smUpdateStore.add(addDVDMenuItem);
 		
 		menu.add(smUpdateStore);
 		menu.add(new JMenuItem("View store"));
-		menu.add(new JMenuItem("View cart"));
+		JMenuItem viewCart = new JMenuItem("View cart");
+	    viewCart.addActionListener(new ActionListener() {
+	        public void actionPerformed(ActionEvent e) {
+	            new CartScreen(cart);
+	        }
+	    });
+		menu.add(viewCart);
 		
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -97,7 +131,7 @@ public class StoreScreen extends JFrame{
 		
 		ArrayList<Media> mediaInStore = store.getItemsInStore();
 		for (int i=0; i<mediaInStore.size(); i++) {
-			MediaStore cell = new MediaStore(mediaInStore.get(i));
+			MediaStore cell = new MediaStore(mediaInStore.get(i), cart);
 			center.add(cell);
 		}
 		
@@ -105,7 +139,7 @@ public class StoreScreen extends JFrame{
 	}
 	
 	public static void main(String[] args) {
-		Store store = new Store(3);
+		Store store = new Store(10);
 		DigitalVideoDisc dvd;
 		try {
 			dvd = new DigitalVideoDisc("Harry Potterr", "Animation", "Roger Allers", 87, 19.95f);
@@ -117,7 +151,7 @@ public class StoreScreen extends JFrame{
 		}
 	    Book book;
 		try {
-			book = new Book(5, "Harry Potter", "Science Fiction", 9.9f);
+			book = new Book("Harry Potter", "Science Fiction", 9.9f);
 			store.addMedia(book);
 		} catch (NegativeException e) {
 			e.printStackTrace();
@@ -126,13 +160,13 @@ public class StoreScreen extends JFrame{
 		}
 	    CompactDisc cd;
 		try {
-			cd = new CompactDisc(10, "Greatest Hits", "Rock", 11f, "Journey", "Micheal Jackson");
+			cd = new CompactDisc("Greatest Hits", "Rock", 11f, "Journey", "Micheal Jackson");
 			store.addMedia(cd);
 		} catch (NegativeException e) {
 			e.printStackTrace();
 		} catch (LimitExceededException e) {			
 			e.printStackTrace();
 		}
-		new StoreScreen(store);
+	    new StoreScreen(store);
 	}
 }

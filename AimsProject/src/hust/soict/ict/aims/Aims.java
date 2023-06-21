@@ -184,14 +184,11 @@ public class Aims {
 						if (!(type.equals("book") || type.equals("dvd") || type.equals("cd"))) {
 							System.out.println("Type does not exist. Enter again.");
 						}
-						else {
-							int id; 
+						else {							
 							String title;
 							String category;
-							float cost; 
-							
-							System.out.println("Enter id: ");
-							id = scanner.nextInt();
+							float cost; 						
+				
 							scanner.nextLine();
 							System.out.println("Enter title: ");
 							title = scanner.nextLine();
@@ -207,7 +204,7 @@ public class Aims {
 								scanner.nextLine();
 								Book book;
 								try {
-									book = new Book(id, title, category, cost);
+									book = new Book(title, category, cost);
 									while (num>0) {
 										System.out.println("Enter author: ");
 										String author = scanner.nextLine();
@@ -256,7 +253,7 @@ public class Aims {
 								scanner.nextLine();
 								CompactDisc cd;
 								try {
-									cd = new CompactDisc(id, title, category, cost, director, artist);
+									cd = new CompactDisc(title, category, cost, director, artist);
 									while (num>0) {
 										System.out.println("Enter track title: ");
 										String trackTitle = scanner.nextLine();

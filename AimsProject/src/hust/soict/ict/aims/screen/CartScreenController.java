@@ -5,9 +5,13 @@ import hust.soict.ict.aims.media.Media;
 import hust.soict.ict.aims.media.Playable;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -34,6 +38,12 @@ public class CartScreenController {
 
     @FXML
     private TableView<Media> tblMedia;
+    
+    @FXML
+    private Label lbTotalCost;
+    
+    @FXML
+    private Button btnOrder;
     
     @FXML
     private void initialize() {
@@ -66,6 +76,10 @@ public class CartScreenController {
 				    }
 				});
     	
+    	lbTotalCost.setText(cart.totalCost() + " $");
+        cart.getItemsOrdered().addListener((ListChangeListener<Media>) c -> {
+            lbTotalCost.setText(cart.totalCost() + " $");
+        });
     }
     
     @FXML
@@ -76,6 +90,34 @@ public class CartScreenController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+    }
+    
+    @FXML
+    void btnOrderPressed(ActionEvent event) {
+        if (cart.getItemsOrdered().size() > 0) {
+            cart.placeOrder();
+            
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Order Created!", ButtonType.OK);
+            alert.setTitle("Order");
+            alert.setHeaderText(null);
+            alert.showAndWait();
+        }
+        else {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "No items in the cart!", ButtonType.OK);
+            alert.setTitle("Order");
+            alert.setHeaderText(null);
+            alert.showAndWait();
+        }
+    }
+    
+    @FXML
+    void btnPlayPressed(ActionEvent event) {
+        Media media = tblMedia.getSelectionModel().getSelectedItem();
+
+        Alert alert = new Alert(Alert.AlertType.NONE, "Play " + media.getTitle(), ButtonType.OK);
+        alert.setTitle("Playing");
+        alert.setHeaderText(null);
+        alert.showAndWait();
     }
     
     public CartScreenController(Cart cart) {

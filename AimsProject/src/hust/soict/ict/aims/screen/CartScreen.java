@@ -64,7 +64,7 @@ public class CartScreen extends JFrame{
 		}
 	    Book book;
 		try {
-			book = new Book(5, "Harry Potter", "Science Fiction", 9.9f);
+			book = new Book("Harry Potter", "Science Fiction", 9.9f);
 			cart.addMedia(book);
 		} catch (NegativeException e) {
 			e.printStackTrace();
@@ -73,7 +73,7 @@ public class CartScreen extends JFrame{
 		}
 	    CompactDisc cd;
 		try {
-			cd = new CompactDisc(10, "Greatest Hits", "Rock", 11f, "Journey", "Micheal Jackson");
+			cd = new CompactDisc("Greatest Hits", "Rock", 11f, "Journey", "Micheal Jackson");
 			cart.addMedia(cd);
 		} catch (NegativeException e) {
 			e.printStackTrace();

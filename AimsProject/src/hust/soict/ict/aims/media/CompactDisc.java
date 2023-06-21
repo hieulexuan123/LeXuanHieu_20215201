@@ -9,17 +9,18 @@ import hust.soict.ict.aims.exception.NotExistedException;
 import hust.soict.ict.aims.exception.PlayerException;
 
 public class CompactDisc extends Disc implements Playable{
+	private static int nbCompactDiscs = 0;
 	private String artist;
 	private List<Track> tracks = new ArrayList<>();
 	
-	public CompactDisc(int id, String title, String category, float cost, String director, String artist, ArrayList<Track> tracks) throws NegativeException {
-		super(id, title, category, cost, director);
+	public CompactDisc(String title, String category, float cost, String director, String artist, ArrayList<Track> tracks) throws NegativeException {
+		super(nbCompactDiscs++, title, category, cost, director);
 		this.artist = artist;
 		this.tracks = tracks;
 	}
 	
-	public CompactDisc(int id, String title, String category, float cost, String director, String artist) throws NegativeException {
-		super(id, title, category, cost, director);
+	public CompactDisc(String title, String category, float cost, String director, String artist) throws NegativeException {
+		super(nbCompactDiscs++, title, category, cost, director);
 		this.artist = artist;
 	}
 

@@ -8,14 +8,15 @@ import hust.soict.ict.aims.exception.NegativeException;
 import hust.soict.ict.aims.exception.NotExistedException;
 
 public class Book extends Media{
+	private static int nbBooks = 0;
 	private List<String> authors = new ArrayList<>();
 	
-	public Book(int id, String title, String category, float cost) throws NegativeException {
-		super(id, title, category, cost);
+	public Book(String title, String category, float cost) throws NegativeException {
+		super(nbBooks++, title, category, cost);
 	}
 
-	public Book(int id, String title, String category, float cost, ArrayList<String> authors) throws NegativeException {
-		super(id, title, category, cost);
+	public Book(String title, String category, float cost, ArrayList<String> authors) throws NegativeException {
+		super(nbBooks++, title, category, cost);
 		this.authors = authors;
 	}
 
